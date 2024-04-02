@@ -384,66 +384,131 @@
 
 #Решение квадратного уравнения
 
+# import tkinter as tk
+# from tkinter import messagebox
 
+# def solve_quadratic(a, b, c):
+#     discriminant = b**2 - 4*a*c
+#     if discriminant > 0:
+#         x1 = (-b + discriminant**0.5) / (2*a)
+#         x2 = (-b - discriminant**0.5) / (2*a)
+#         return x1, x2
+#     elif discriminant == 0:
+#         x = -b / (2*a)
+#         return x,
+#     else:
+#         return None
+
+# def solve_equation():
+#     try:
+#         a = float(entry_a.get())
+#         b = float(entry_b.get())
+#         c = float(entry_c.get())
+
+#         roots = solve_quadratic(a, b, c)
+#         if roots is not None:
+#             if len(roots) == 1:
+#                 result_label.config(text=f"Уравнение имеет один корень: x = {roots[0]}")
+#             else:
+#                 result_label.config(text=f"Уравнение имеет два корня: x1 = {roots[0]}, x2 = {roots[1]}")
+#         else:
+#             result_label.config(text="Уравнение не имеет действительных корней.")
+#     except ValueError:
+#         messagebox.showerror("Ошибка", "Поля должны содержать числовые значения!")
+
+# root = tk.Tk()
+# root.title("Решение квадратного уравнения")
+
+# frame = tk.Frame(root)
+# frame.pack(padx=20, pady=20)
+
+# label_a = tk.Label(frame, text="a:", font=("Arial", 12))
+# label_a.grid(row=0, column=0)
+# entry_a = tk.Entry(frame, font=("Arial", 12))
+# entry_a.grid(row=0, column=1)
+
+# label_b = tk.Label(frame, text="b:", font=("Arial", 12))
+# label_b.grid(row=1, column=0)
+# entry_b = tk.Entry(frame, font=("Arial", 12))
+# entry_b.grid(row=1, column=1)
+
+# label_c = tk.Label(frame, text="c:", font=("Arial", 12))
+# label_c.grid(row=2, column=0)
+# entry_c = tk.Entry(frame, font=("Arial", 12))
+# entry_c.grid(row=2, column=1)
+
+# solve_button = tk.Button(frame, text="Решить", font=("Arial", 12), bg="green", fg="white", command=solve_equation)
+# solve_button.grid(row=3, columnspan=2, pady=10)
+
+# result_label = tk.Label(frame, text="", font=("Arial", 12))
+# result_label.grid(row=4, columnspan=2)
+
+# root.mainloop()
+
+
+#Numeroloogia Pythagorase ruut
 
 import tkinter as tk
-from tkinter import messagebox
+from collections import Counter
 
-def solve_quadratic(a, b, c):
-    discriminant = b**2 - 4*a*c
-    if discriminant > 0:
-        x1 = (-b + discriminant**0.5) / (2*a)
-        x2 = (-b - discriminant**0.5) / (2*a)
-        return x1, x2
-    elif discriminant == 0:
-        x = -b / (2*a)
-        return x,
+def calculate_pitagoras_square(birth_date):
+    day, month, year = map(int, birth_date.split('.'))
+    first_number = sum(int(digit) for digit in str(day) + str(month))
+    second_number = sum(int(digit) for digit in str(year))
+    first_work_number = (first_number + second_number) % 9 or 9
+    second_work_number = (first_work_number - 2 * int(str(day)[0])) % 9 or 9
+    third_work_number = sum(int(digit) for digit in str(second_work_number))
+    return first_work_number, second_work_number, third_work_number
+
+def calculate_characteristics(numbers):
+    characteristics = []
+    for num in numbers:
+        if num == 1:
+            characteristics.append("Лидерство и энергия")
+        elif num == 2:
+            characteristics.append("Дипломатия и сотрудничество")
+        elif num == 3:
+            characteristics.append("Творчество и общительность")
+        elif num == 4:
+            characteristics.append("Практичность и стабильность")
+        elif num == 5:
+            characteristics.append("Приключения и свобода")
+        elif num == 6:
+            characteristics.append("Ответственность и забота")
+        elif num == 7:
+            characteristics.append("Исследование и мудрость")
+        elif num == 8:
+            characteristics.append("Амбиции и достижения")
+        elif num == 9:
+            characteristics.append("Завершение и завершенность")
+    return characteristics
+
+def calculate_button_clicked():
+    birth_date = entry_birth_date.get()
+    if birth_date:
+        numbers = calculate_pitagoras_square(birth_date)
+        characteristics = calculate_characteristics(numbers)
+        result_text = "\n".join(f"Ряд {i + 1}: {numbers[i]} - {characteristics[i]}" for i in range(3))
+        result_label.config(text=result_text)
     else:
-        return None
-
-def solve_equation():
-    try:
-        a = float(entry_a.get())
-        b = float(entry_b.get())
-        c = float(entry_c.get())
-
-        roots = solve_quadratic(a, b, c)
-        if roots is not None:
-            if len(roots) == 1:
-                result_label.config(text=f"Уравнение имеет один корень: x = {roots[0]}")
-            else:
-                result_label.config(text=f"Уравнение имеет два корня: x1 = {roots[0]}, x2 = {roots[1]}")
-        else:
-            result_label.config(text="Уравнение не имеет действительных корней.")
-    except ValueError:
-        messagebox.showerror("Ошибка", "Поля должны содержать числовые значения!")
+        result_label.config(text="Введите дату рождения!")
 
 root = tk.Tk()
-root.title("Решение квадратного уравнения")
+root.title("Квадрат Пифагора")
+root.geometry("400x200")
 
 frame = tk.Frame(root)
 frame.pack(padx=20, pady=20)
 
-label_a = tk.Label(frame, text="a:", font=("Arial", 12))
-label_a.grid(row=0, column=0)
-entry_a = tk.Entry(frame, font=("Arial", 12))
-entry_a.grid(row=0, column=1)
+label_birth_date = tk.Label(frame, text="Введите дату рождения (ДД.ММ.ГГГГ):", font=("Arial", 12))
+label_birth_date.grid(row=0, column=0, padx=5, pady=5)
+entry_birth_date = tk.Entry(frame, font=("Arial", 12))
+entry_birth_date.grid(row=0, column=1, padx=5, pady=5)
 
-label_b = tk.Label(frame, text="b:", font=("Arial", 12))
-label_b.grid(row=1, column=0)
-entry_b = tk.Entry(frame, font=("Arial", 12))
-entry_b.grid(row=1, column=1)
-
-label_c = tk.Label(frame, text="c:", font=("Arial", 12))
-label_c.grid(row=2, column=0)
-entry_c = tk.Entry(frame, font=("Arial", 12))
-entry_c.grid(row=2, column=1)
-
-solve_button = tk.Button(frame, text="Решить", font=("Arial", 12), bg="green", fg="white", command=solve_equation)
-solve_button.grid(row=3, columnspan=2, pady=10)
+calculate_button = tk.Button(frame, text="Рассчитать", font=("Arial", 12), bg="green", fg="white", command=calculate_button_clicked)
+calculate_button.grid(row=1, columnspan=2, pady=10)
 
 result_label = tk.Label(frame, text="", font=("Arial", 12))
-result_label.grid(row=4, columnspan=2)
+result_label.grid(row=2, columnspan=2)
 
 root.mainloop()
-
